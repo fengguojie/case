@@ -1,0 +1,11 @@
+# for eclipse
+.classpath
+.project
+/.settings/
+/target/
+nameprod.wlist.58dns.org*
+nametest*
+
+# IntelliJ project files
+*.idea
+*.iml
