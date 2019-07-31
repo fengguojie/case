@@ -5,8 +5,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-
-import com.sun.xml.internal.ws.Closeable;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class ReadWriteUtil {
 	
@@ -70,13 +70,32 @@ public class ReadWriteUtil {
 		fr.close();
 		bw.close();
 		fw.close();
-		System.out.println("copy finashed");
+		System.out.println("copy advanced finashed");
+	}
+	
+	public static String systemInput() throws Exception {
+		InputStreamReader ir = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(ir);
+		System.out.println("please input your name: ");
+		String input = br.readLine();
+		System.out.println("your name is "+input);
+		br.close();
+		ir.close();
+		return input;
+	}
+	
+	public static void systemOutput() throws Exception {
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(systemInput());
+		bw.close();
 	}
 	
 	public static void main(String[] args) throws Exception {
-		fileInput();
-		fileCopy();
-		fileCopyAdvance();
+//		fileInput();
+//		fileCopy();
+//		fileCopyAdvance();
+//		systemInput();
+		systemOutput();
 	}
 
 }
