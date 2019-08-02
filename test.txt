@@ -1,3 +1,4 @@
 hello file
 中文
 utf8
+hello random access file
