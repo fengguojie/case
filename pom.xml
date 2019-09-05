@@ -11,7 +11,7 @@
 		    <artifactId>netty-all</artifactId>
 		    <version>4.1.37.Final</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.searchbox/jest -->
+		
 		<dependency>
 		    <groupId>io.searchbox</groupId>
 		    <artifactId>jest</artifactId>
@@ -35,6 +35,12 @@
 		    <groupId>com.rabbitmq</groupId>
 		    <artifactId>amqp-client</artifactId>
 		    <version>4.2.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.zookeeper</groupId>
+		    <artifactId>zookeeper</artifactId>
+		    <version>3.4.12</version>
 		</dependency>
   
   </dependencies>
