@@ -6,8 +6,12 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ZkConnectUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(ZkConnectUtil.class);
 	
 	private static String defaultHost = "localhost:2181";
 	private static CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -18,7 +22,7 @@ public class ZkConnectUtil {
 		try {
 			return connect(defaultHost);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());;
 		}
 		return null;
 	}
@@ -35,7 +39,7 @@ public class ZkConnectUtil {
 			countDownLatch.await();
 			return zk;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return null;
 	}

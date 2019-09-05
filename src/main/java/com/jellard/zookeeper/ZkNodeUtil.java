@@ -10,8 +10,12 @@ import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ZkNodeUtil {
+	
+	private static Logger logger = LoggerFactory.getLogger(ZkNodeUtil.class);
 	
 	private static ZooKeeper conn;
 	
@@ -29,16 +33,16 @@ public class ZkNodeUtil {
 	
 	public static void createNode(String path,String data) throws Exception {
 		if (exists(path)) {
-			System.out.println("znode is exists!");
+			logger.info("znode is exists!");
 			return;
 		}
 		String result = conn.create(path, data.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-		System.out.println(result);
+		logger.info(result);
 	}
 	
 	public static String getDate(String path) throws Exception{
 		if (!exists(path)) {
-			System.out.println("znode not exists!");
+			logger.info("znode not exists!");
 			return null;
 		}
 		byte[] data = conn.getData(path, false, null);
@@ -48,7 +52,7 @@ public class ZkNodeUtil {
 	
 	public static int setDate(String path,String content) throws Exception{
 		if (!exists(path)) {
-			System.out.println("znode not exists!");
+			logger.info("znode not exists!");
 			return -1;
 		}
 		Stat stat = conn.setData(path, content.getBytes(), conn.exists(path, false).getVersion());
@@ -57,7 +61,7 @@ public class ZkNodeUtil {
 	
 	public static void getChildren(String path) throws Exception{
 		if (!exists(path)) {
-			System.out.println("znode not exists!");
+			logger.info("znode not exists!");
 			return;
 		}
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -65,30 +69,30 @@ public class ZkNodeUtil {
 			public void process(WatchedEvent event) {
 				if (event.getType() == EventType.NodeChildrenChanged) {
 					String childPath = event.getPath();
-					System.out.println(childPath+":childnode changed");
+					logger.info(childPath+":childnode changed");
 				}
 				if (event.getType() == EventType.NodeCreated) {
 					String childPath = event.getPath();
-					System.out.println(childPath+"node create");
+					logger.info(childPath+"node create");
 				}
 				if (event.getType() == EventType.NodeDeleted) {
 					String childPath = event.getPath();
-					System.out.println(childPath+"node delete");
+					logger.info(childPath+"node delete");
 				}
 				countDownLatch.countDown();
 			}
 		});
 		children.forEach(child ->{
-			System.out.println("child node:"+child);
+			logger.info("child node:"+child);
 		});
 	    countDownLatch.await();
-	    System.out.println("over");
+	    logger.info("over");
 		return;
 	}
 	
 	public static void delete(String path) throws Exception{
 		if (!exists(path)) {
-			System.out.println("znode not exists!");
+			logger.info("znode not exists!");
 			return;
 		}
 		conn.delete(path, conn.exists(path, false).getVersion());
