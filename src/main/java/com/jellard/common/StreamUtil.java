@@ -57,6 +57,14 @@ public class StreamUtil {
 		
 		/*=====*/
 		System.out.println("123");
+		/**
+		 * 第一步  开发写新的迭代的功能代码
+		 * 第二步 提交代码到远程仓库(git add -> git commit -m "" ->git push or git pull and then git push)
+		 * 第三步 云平台打包 and 送测（generate ftp文件路径）
+		 * 第四步 cd到tomcat工程所在目录-》覆盖最新的代码(sh ***.sh 离线 ftp 路径名)
+		 * -》重启tomcat容器并且查看启动日志（sh restart.sh && tail -f logs/catalina.out）
+		 * game over
+		 */
 		
 	}
 	
