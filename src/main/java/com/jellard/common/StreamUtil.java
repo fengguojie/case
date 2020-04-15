@@ -1,18 +1,17 @@
 package com.jellard.common;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 
 public class StreamUtil {
 	
@@ -40,31 +39,42 @@ public class StreamUtil {
 	public static Integer[] listToArray(List<Integer> list) {
 		Integer[] array = list.stream().toArray(Integer[]::new);
 		return array;
-	} 
+	}
+	
 	public static void main(String[] args) {
-		List<Integer> nums = Arrays.asList(1,2,3,4,5);
-		functionnal(nums);
+//		List<Integer> nums = Arrays.asList(1,2,3,4,5);
+//		functionnal(nums);
+//		listToArray(nums);
+//		System.out.println(StringUtils.join(nums, "|"));
 		
-		Integer[] array = listToArray(nums);
-		//System.out.println(array);
+		List<User> users = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			int grade = new Random().nextInt(100);
+			User user = new User(i,"name"+i,new BigDecimal(String.valueOf(grade)));;
+			users.add(user);
+		}
+		System.out.println(users);
 		
-		System.out.println(StringUtils.join(nums, "|"));
+		List<User> filterUsers = users.stream()
+				      .filter(user -> user.getGrade().intValue() >= 80)
+		              .filter(user -> user.getGrade().intValue() <= 90)
+		              .sorted(Comparator.comparing(User::getGrade))
+		              .collect(Collectors.toList());
+		System.out.println(filterUsers);
 		
-		System.out.println(RandomStringUtils.random(8, "0123456789qwert"));
-		Date day = DateUtils.addDays(new Date(), -1);
-		String dayStr = DateFormatUtils.format(day, DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.getPattern());
-		System.out.println(dayStr);
+		BigDecimal average = users.stream()
+				      .map(user -> user.getGrade())
+		              .reduce(new BinaryOperator<BigDecimal>() {
+								@Override
+								public BigDecimal apply(BigDecimal var1, BigDecimal var2) {
+									return var1.add(var2);
+								}
+					   }).get().divide(new BigDecimal("100"));
+		System.out.println("平均分数："+average);
 		
-		/*=====*/
-		System.out.println("123");
-		/**
-		 * 第一步  开发写新的迭代的功能代码
-		 * 第二步 提交代码到远程仓库(git add -> git commit -m "" ->git push or git pull and then git push)
-		 * 第三步 云平台打包 and 送测（generate ftp文件路径）
-		 * 第四步 cd到tomcat工程所在目录-》覆盖最新的代码(sh ***.sh 离线 ftp 路径名)
-		 * -》重启tomcat容器并且查看启动日志（sh restart.sh && tail -f logs/catalina.out）
-		 * game over
-		 */
+		Map<Long, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user->user));
+		System.out.println(userMap);
+
 		
 	}
 	
