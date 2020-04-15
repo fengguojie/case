@@ -13,6 +13,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.zookeeper.data.Id;
+
 public class StreamUtil {
 	
 	private Integer version = 1;
@@ -53,14 +55,14 @@ public class StreamUtil {
 			User user = new User(i,"name"+i,new BigDecimal(String.valueOf(grade)));;
 			users.add(user);
 		}
-		System.out.println(users);
+		//System.out.println(users);
 		
 		List<User> filterUsers = users.stream()
 				      .filter(user -> user.getGrade().intValue() >= 80)
 		              .filter(user -> user.getGrade().intValue() <= 90)
 		              .sorted(Comparator.comparing(User::getGrade))
 		              .collect(Collectors.toList());
-		System.out.println(filterUsers);
+		//System.out.println(filterUsers);
 		
 		BigDecimal average = users.stream()
 				      .map(user -> user.getGrade())
@@ -74,11 +76,60 @@ public class StreamUtil {
 		
 		Map<Long, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user->user));
 		System.out.println(userMap);
-
+		List<Long> userIds = new ArrayList<>(userMap.keySet());
+		Long userId = userIds.stream().filter(id -> id.longValue()==2).findAny().orElse(null);
+		List<String> userIdsStr = userIds.stream().map(String::valueOf).collect(Collectors.toList());
+		System.out.println(userIdsStr);
 		
+		users.forEach(user -> System.out.println(user));
+		users.forEach(user -> {
+			BigDecimal grade = user.getGrade();
+			grade.add(new BigDecimal("10"));
+			user.setGrade(grade);
+			System.out.println(user);
+		});
+	}
+
+}
+
+class User {
+	
+	long id;
+	String name;
+	BigDecimal grade;
+	
+	public User() {}
+	
+	public User(long id,String name,BigDecimal grade) {
+		this.id = id;
+		this.name = name;
+		this.grade = grade;
 	}
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public BigDecimal getGrade() {
+		return grade;
+	}
+	public void setGrade(BigDecimal grade) {
+		this.grade = grade;
+	}
 	
-	
+	@Override
+	public String toString() {
+		return new StringBuffer("编号:").append(id)
+				   .append("|姓名:").append(name)
+				   .append("|成绩:").append(grade).toString();
+	}
 
 }
