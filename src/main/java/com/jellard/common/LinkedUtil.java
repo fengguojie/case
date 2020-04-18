@@ -14,6 +14,7 @@ public class LinkedUtil {
 	}
 	
 	Node head;//头结点
+	Node tail;
 	
 	public void add(Node node) {
 		if (head == null) {
@@ -23,6 +24,16 @@ public class LinkedUtil {
 			Node curHeadNext = head.next;
 			head.next = node;
 			node.next = curHeadNext;
+		}
+	}
+	public void tailAdd(Node node) {
+		if (head == null) {
+			head = new Node();
+			head.next = node;
+			tail = node;
+		}else {
+			tail.next = node;
+			tail = node;
 		}
 	}
 	
@@ -47,7 +58,8 @@ public class LinkedUtil {
 	public static void main(String[] args) {
 		LinkedUtil linkedUtil = new LinkedUtil();
 		for (int i = 0; i < 10; i++) {
-			linkedUtil.add(new Node(String.valueOf(i)));
+			linkedUtil.tailAdd(new Node(String.valueOf(i)));
+			//linkedUtil.add(new Node(String.valueOf(i)));
 		}
 		linkedUtil.getAll();
 	}
