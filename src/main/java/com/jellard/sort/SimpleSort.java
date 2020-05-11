@@ -2,9 +2,7 @@ package com.jellard.sort;
 
 public class SimpleSort {
 	
-	private static int default_data_length = 1<<4;
-	
-	
+	//简单比较排序
 	public int[] bubbleSort(int[] unsorted){
 		int length = unsorted.length;
 		for (int i = 0; i < length; i++) {
@@ -15,11 +13,11 @@ public class SimpleSort {
 					unsorted[j+1] = temp;
 				}
 			}
-			
 		}
 		return  unsorted;
 	}
 	
+	//简单选择排序
 	public int[] selection(int[] unsorted){
 		int length = unsorted.length;
 		int temp;
