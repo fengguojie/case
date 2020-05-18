@@ -9,8 +9,7 @@ public class ThreadTest {
 	private Lock lock = new ReentrantLock();
 	private Condition condOdd = lock.newCondition();
 	private Condition condEven = lock.newCondition();
-	private boolean oddFlag = true;
-	private boolean evenFlag = false;
+	private boolean flag = true;
 	private int count = 0;
 	
 	
@@ -24,13 +23,12 @@ public class ThreadTest {
 				}
 				try {
 					lock.lock();
-					if (evenFlag) {
+					if (!flag) {
 						condOdd.await();
 					}
 					count++;
 					System.out.println(Thread.currentThread().getName()+":"+count);
-					oddFlag = false;
-					evenFlag = true;
+					flag = false;
 					condEven.signal();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,13 +48,12 @@ public class ThreadTest {
 				}
 				try {
 					lock.lock();
-					if (oddFlag) {
+					if (flag) {
 						condEven.await();
 					}
 					count++;
 					System.out.println(Thread.currentThread().getName()+":"+count);
-					oddFlag = true;
-					evenFlag = false;
+					flag = true;
 					condOdd.signal();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,8 +74,19 @@ public class ThreadTest {
 //        System.out.println("是否停止2？="+thread.isInterrupted());
 //		System.out.println("main end");
 		ThreadTest threadTest = new ThreadTest();
-		new Thread(threadTest.new PrintOdd(), "线程A").start();
-		new Thread(threadTest.new PrintEven(), "线程B").start();
+		Thread threada = new Thread(threadTest.new PrintOdd(), "线程A");
+		Thread threadb = new Thread(threadTest.new PrintEven(), "线程B");
+		
+		System.out.println(Thread.currentThread());
+		ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
+		int count = threadGroup.activeCount();
+		System.out.println(count);
+		Thread[] threads = new Thread[count];
+		threadGroup.enumerate(threads);
+		for (Thread thread : threads) {
+			
+		}
+		
 		
 	}
 
