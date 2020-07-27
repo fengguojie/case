@@ -20,11 +20,19 @@ public class Treefy {
 			list.get(lastParent).right = list.get(lastParent*2+2);
 		}
 		
-		String str1 = "abfabcd";
-		String str2 = "abc";
-		int index = str1.indexOf(str2,4);
-		System.out.println(index);
-		System.out.println("end");
+	}
+	
+	public boolean childNode(Tree root,Tree temp) {
+		if(root == null) {
+			return false;
+		}
+		if (root== temp) {
+			return true;
+		}
+		if (childNode(root.left, temp) || childNode(root.right, temp)) {
+			return true;
+		}
+		return false;
 	}
 	
 	static class Tree{
