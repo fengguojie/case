@@ -1,8 +1,8 @@
-package com.jellard.sort;
+package com.jellard.algorithm;
 
 import java.util.Arrays;
 
-public class SortPrac {
+public class SortAlgorithm {
 	
 	public static void main(String[] args) {
 		int[] array = {12,5,7,15,2,6,4,9,19};
