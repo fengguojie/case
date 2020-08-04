@@ -27,6 +27,9 @@ public class StringAlgorithm {
 	public static void main(String[] args) {
 		StringAlgorithm algorithm =  new StringAlgorithm();
 		System.out.println(algorithm.match("abcdefg", "bbcdefg"));
+		String str1 = "123456";
+		String str2 = "123456";
+		System.out.println(str2.startsWith(str1));
 	}
 	
 	//kmp http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html
