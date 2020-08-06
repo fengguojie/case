@@ -1,4 +1,4 @@
-package com.jellard.adapter;
+package com.jellard.vo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class meiju {
+public class Test {
 	
 	//根据类型来遍历对象的属性
 	public void AllByType(Student model) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{

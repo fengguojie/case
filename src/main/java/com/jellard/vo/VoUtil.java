@@ -1,4 +1,4 @@
-package com.jellard.adapter;
+package com.jellard.vo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

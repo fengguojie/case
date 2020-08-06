@@ -1,4 +1,4 @@
-package com.jellard.adapter;
+package com.jellard.vo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
