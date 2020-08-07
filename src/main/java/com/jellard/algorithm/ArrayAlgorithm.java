@@ -1,7 +1,5 @@
 package com.jellard.algorithm;
 
-import java.util.Arrays;
-
 public class ArrayAlgorithm {
 	
 	public void leftMove(int[] array,int k) {
@@ -15,7 +13,6 @@ public class ArrayAlgorithm {
 		reverse(array, array.length-k, array.length-1);
 		reverse(array, 0, array.length-1);
 	}
-	
 	private void reverse(int[] array,int i,int j) {
 		while(i<j) {
 			int temp = array[i];
@@ -26,12 +23,65 @@ public class ArrayAlgorithm {
 		}
 	}
 	
+	public int maxSubarray(int[] array) {
+	    int max = -100000;
+        for (int i = 0; i < array.length; i++) {
+			for (int j = i; j < array.length; j++) {
+				int sum = 0;
+				int k = i;
+				while(k <= j) {
+					sum = sum + array[k];
+					k++;
+				}
+				if (max < sum) {
+					max = sum;
+				}
+			}
+		}
+	    return max; 
+	}
+	
+	private int maxSubarray2(int[] array){
+	    int max = -100000;
+	    for (int i = 0; i < array.length; i++){
+	        int sum = 0;
+	        for (int j = i; j < array.length; j++){
+	            sum += array[j];
+	            if (sum > max){
+	                max = sum;
+	            }
+	        }
+	    }
+	    return max;
+	}
+	
+	private int maxSubarray3(int[] array){
+	    int max = -100000;
+	    int sum = 0;
+	    for (int i = 0; i < array.length; i++){
+	        sum += array[i];
+            if (sum < array[i]){
+            	sum = array[i];
+            }
+            if (sum > max) {
+            	max = sum;
+			}
+	    }
+	    return max;
+	}
+	
+	
 	public static void main(String[] args) {
 		ArrayAlgorithm algorithm = new ArrayAlgorithm();
-		int[] array = {1,2,3,4,5,6,7};
+		int[] array = {13,-5,-3,-4,5,8,-7};
 		//algorithm.leftMove(array, 4);
-		algorithm.rightMove(array, 2);
-		System.out.println(Arrays.toString(array));
+		//algorithm.rightMove(array, 2);
+		//System.out.println(Arrays.toString(array));
+		
+		int maxSubarray = algorithm.maxSubarray(array);
+		System.out.println(maxSubarray);
+		int maxSubarray2 = algorithm.maxSubarray3(array);
+		System.out.println(maxSubarray2);
 	}
 
 }
